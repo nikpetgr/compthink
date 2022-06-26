@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script-->
+    <title>Μάντεψε τον αριθμό</title>
+
+    <link rel="stylesheet" href="../../style.css">
+   
+  </head>
+
+  <body>
+  <div id="header">
+<a href='../games.html'>Παιχνίδια Ανάπτυξης Υπολογιστικής Σκέψης</a>
+</div>
+    <h1>Μάντεψε τον αριθμό</h1>
+
+    <p><b>Επιλέξαμε τυχαία έναν αριθμό από 1-100. Μπορείς να τον μαντέψεις? Έχεις 10 προσπάθειες.</b> </p>
+	<p>Σε κάθε μαντεψιά θα σου λέμε αν ο αριθμός σου είναι πάνω ή κάτω από τον αριθμό που ψάχνεις</p>
+
+    <div class="form">
+      <label for="guessField" style="color: blue; font-weight:800;">Πληκτρολόγησε τον αριθμό: </label><input type="text" style="color: blue; 
+	text-align:center;
+	width:50px;
+	padding:10px 0;
+	font-size:100%;
+	font-weight:600;
+	margin-top:5px;
+	border-radius:5px;
+	border:2px solid #202020;" id="guessField" class="guessField">
+      <input type="submit" style="width:110px;font-size:15px;
+	padding:10px 0;
+	border-radius:5px;" value="ΠΑΤΑ ΕΔΩ" class="guessSubmit">
+    </div>
+
+    <div class="allResults">
+      <p class="guesses"></p>
+      <p class="lastResult"></p>
+      <p class="lowOrHi"></p>
+    </div>
+
+    <script>
+      let randomNumber = Math.floor(Math.random() * 100) + 1;
+      const guesses = document.querySelector('.guesses');
+      const lastResult = document.querySelector('.lastResult');
+      const lowOrHi = document.querySelector('.lowOrHi'); 
+	  const guessSubmit = document.querySelector('.guessSubmit');
+      const guessField = document.querySelector('.guessField');
+      let guessCount = 1;
+      let resetButton;
+	  let nextButton;
+      function checkGuess() { 
+        let userGuess = Number(guessField.value);
+        if (guessCount === 1) {
+          guesses.textContent = 'Προηγούμενοι αριθμοί: ';
+        }
+        guesses.textContent += userGuess + ' ';
+        if (userGuess === randomNumber) {
+          lastResult.textContent = 'Συγχαρητήρια!!! Βρήκες τον αριθμό με '+ guessCount +' μαντεψιές';
+          lastResult.style.fontWeight = 'bold';
+		  lastResult.style.color = 'white';
+		  lastResult.style.backgroundColor = 'green';
+          lowOrHi.textContent = '';
+          setGameOver();
+        } else if (guessCount === 10) {
+          lastResult.textContent = '!!!GAME OVER!!!';
+          lowOrHi.textContent = '';
+          setGameOver();
+        } else {
+          lastResult.textContent = 'Λάθος αριθμός!';
+          lastResult.style.backgroundColor = 'red';
+		  lastResult.style.fontWeight = 'bold';
+          if(userGuess < randomNumber) {
+            lowOrHi.textContent = 'Πρέπει να ανέβεις αριθμούς' ;
+			lowOrHi.style.color = 'blue';
+			lowOrHi.style.fontWeight = 'bold';
+          } else if(userGuess > randomNumber) {
+            lowOrHi.textContent = 'Πρέπει να κατέβεις αριθμούς';
+			lowOrHi.style.color = 'red';
+			lowOrHi.style.fontWeight = 'bold';
+          }
+        }
+        guessCount++;
+        guessField.value = '';
+        guessField.focus();
+      }
+      guessSubmit.addEventListener('click', checkGuess);
+	  function setGameOver() {
+        guessField.disabled = true;
+        guessSubmit.disabled = true;
+        resetButton = document.createElement('button');
+        resetButton.textContent = 'ΝΕΟ ΠΑΙΧΝΙΔΙ';
+        document.body.appendChild(resetButton);
+        resetButton.addEventListener('click', resetGame);
+		nextButton = document.createElement('button');
+		nextButton.textContent = 'ΕΠΟΜΕΝΟ ΠΑΙΧΝΙΔΙ';
+		document.body.appendChild(nextButton);
+		nextButton.addEventListener('click', nextGame);
+		
+      }
+      function resetGame() {
+        guessCount = 1;
+        const resetall = document.querySelectorAll('.allResults p');
+        for(let i = 0 ; i < resetall.length ; i++) {
+          resetall[i].textContent = '';
+        }
+        resetButton.parentNode.removeChild(resetButton);
+		nextButton.parentNode.removeChild(nextButton);
+        guessField.disabled = false;
+        guessSubmit.disabled = false;
+        guessField.value = '';
+        guessField.focus();
+        lastResult.style.backgroundColor = 'white';
+        randomNumber = Math.floor(Math.random() * 100) + 1;
+      }
+	   function nextGame() {window.location.href = "../find the next number/game1.html";
+	   }
+    </script>
+  </body>
+</html>
