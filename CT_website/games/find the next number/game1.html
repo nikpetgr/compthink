@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Παιχνίδια Ανάπτυξης Υπολογιστικής Σκέψης</title>
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div id="header">
+<a href='../games.html'>Παιχνίδια Ανάπτυξης Υπολογιστικής Σκέψης</a>
+
+</div>
+<div id="main-content">	
+	
+	<h2>Βρες το σωστό</h2>
+	<p>Αυτό το παιχνίδι εξασκεί την επίλυση προβλημάτων με μοτίβα.</p>
+	<p> Ποιος είναι ο αριθμός στον τελευταίο όροφο σύμφωνα με την ακολουθία? Έχεις 5 προσπάθειες!</p>
+	<a><img  src="skyscrapper.png" width="225px"></a>
+	
+</div>	
+<div class="form">
+
+	<label for="guessField" style="color: blue; font-weight:800;">Γράψε τον αριθμό: </label>
+	<input type = "text" style="color: blue; 
+	text-align:center;
+	width:50px;
+	padding:10px 0;
+	font-size:100%;
+	font-weight:600;
+	margin-top:5px;
+	border-radius:5px;
+	border:2px solid #202020;" id = "guessField" class = "guessField">
+	<input type = "submit" style="width:110px;font-size:15px;
+	padding:10px 0;
+	border-radius:5px;"
+	 value = "ΚΑΙ ΠΑΤΑ ΕΔΩ"
+		class = "guessSubmit" id = "submitguess">
+		
+</div>
+<p id="feedback"></p>
+<script type = "text/javascript">
+const y = 30;
+var guess = 1;
+const guesses = document.querySelector('.guesses');
+const lastResult = document.querySelector('.lastResult');
+const guessSubmit = document.querySelector('.guessSubmit');
+const guessField = document.querySelector('.guessField');
+let nextButton;
+let resetButton;
+let returnTohomepageButton;
+document.getElementById("submitguess").onclick = function(){
+	var x = document.getElementById("guessField").value;
+	
+if(x == y){
+feedback.textContent = "ΣΥΓΧΑΡΗΤΗΡΙΑ ο "  + x + " είναι ο αριθμός που ψάχνεις. Το βρήκες με " + guess + " προσπάθειες"; setGameOver();}
+else {  
+	feedback.textContent = "ο αριθμός " + x + " που μάντεψες με την " +guess+" προσπάθεια δεν είναι σωστός.Δοκίμασε ξανά";
+	guess++;
+	guessField.value = '';
+	guessField.focus();
+	if (guess == 6){ feedback.textContent = "GAME OVER" ; setGameOver(); }
+	//var x2=x;
+}
+}
+//guessSubmit.addEventListener('click', checkGuess);
+function setGameOver() {
+        guessField.disabled = true;
+        guessSubmit.disabled = true;
+		
+		returnTohomepageButton = document.createElement('button');
+		returnTohomepageButton.textContent = 'ΑΡΧΙΚΗ ΣΕΛΙΔΑ';
+		document.body.appendChild(returnTohomepageButton);
+		returnTohomepageButton.addEventListener('click', returnTohomepage);
+		
+		
+		nextButton = document.createElement('button');
+		nextButton.textContent = 'NEXT GAME';
+		document.body.appendChild(nextButton);
+		nextButton.addEventListener('click', nextGame);}
+		
+		
+		
+function returnTohomepage(){
+	window.location.href = "../../index.html";}		
+function nextGame() {window.location.href = "../polaplasiasmos/index.html";}
+
+
+</script>
+ <!--a  href="../../index.html">Πίσω στην αρχική σελίδα</a--> 
+
+</body>
+ 
+</html>
